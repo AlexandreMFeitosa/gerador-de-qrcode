@@ -5,15 +5,27 @@ const qrCodeImg = document.querySelector("#imgcode");
 
 function generateQrcode()
  {
-    const urlValue = url.value
+    if(!url.value.trim()) {
+        alert("Campo em branco ! Favor preencher o campo correspondente !")
+    } else {
+        const urlValue = url.value
 
-    if(!urlValue) return;
+        if(!urlValue) return;
 
-    geradorQR.innerHTML = `Gerando código ... `
+        qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${urlValue}`
 
-    qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${urlValue}`
+    }
 
  }
+
 geradorQR.addEventListener("click" , () => {
     generateQrcode();
+});
+
+// Evento enter, para que seja gerado o qrcode, usando o botao enter.
+
+url.addEventListener("keydown" , (e) => {
+    if (e.code === "Enter") {
+        generateQrcode();
+    }
 })
